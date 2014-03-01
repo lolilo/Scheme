@@ -1,0 +1,90 @@
+squares = map(lambda x: x**2, range(10), range(9))
+print squares
+
+  ((    (lambda (f) (lambda (x) (f f x))) 
+
+..   (lambda (f k) (if (zero? k) 1 (* k (f f (- k 1)))))) 5)
+
+
+# squares = [x*x for x in range(10)]
+# print squares
+
+
+ (if <CONDITION> <THEN> <ELSE>) where <CONDITION>,
+<THEN> and <ELSE> are expressions.
+#########################################################
+
+   (define (map fn s) 
+..   (if (null? s) nil 
+..     (cons (fn (car s)) 
+..       (map fn (cdr s)))))
+   map
+=> #<Closure>
+   (map square test)
+=> (0 4 9 16 25 36 49)
+   ((lambda (fn lst) 
+..   (if (null? lst) nil 
+..     (cons (fn (car lst)) 
+..       (lambda (fn (cdr lst)))))) square '(5))
+Error: Invalid lambda: (lambda (fn (cdr lst)))
+   ((lambda (fn lst) 
+..   (if (null? lst) nil 
+..     (cons (fn (car lst)) 
+..       (lambda fn (cdr lst))))) square '(4))
+=> (16 . #<Closure>)
+   ((lambda (fn lst) 
+..   (if (null? lst) nil 
+..     (cons (fn (car lst)) 
+..       (lambda fn (cdr lst))))) square '(4))
+=> (16 . #<Closure>)
+   ((lambda (fn lst) 
+..   (if (null? lst) nil 
+..     (cons (fn (car lst)) 
+..       (lambda (fn (cdr lst)))))) square '())
+Error: Invalid lambda: (lambda (fn (cdr lst)))
+   ((lambda (fn lst) 
+..   (if (null? lst) nil 
+..     (cons (fn (car lst)) 
+..       (lambda fn (cdr lst))))) square '())
+=> ()
+
+
+   (define (reduce fn s start) 
+..   (if (null? s) start 
+..     (reduce fn 
+..       (cdr s) 
+..       (fn start (car s)))))
+   reduce
+
+
+   (reduce + test 4)
+=> 31
+   (reduce + test 20)
+=> 47
+   (reduce + test 1)
+=> 28
+   (reduce + test 0)
+=> 27
+   (reduce + test -31)
+=> -4
+   (reduce + test -27)
+=> 0
+
+#########################################################
+   (define (dup s) 
+..   (if (null? s) nil 
+..     (cons (cons (car s) (car s)) (dup (cdr s)))))
+   (dup '(9))
+=> ((9 . 9))
+   (dup t)
+=> ((9 . 9) (8 . 8) (7 . 7) (6 . 6) (5 . 5))
+   (define (dup s) 
+..   (if (null? s) nil 
+..     (cons (cons (car s) (car s)) (dup (cdr s))))))
+Error: execute: unbound symbol: ")" [(anon), (anon), fib, +, (anon), (anon), (anon), cons, (anon), *, (anon), *, map, map, map, (anon), (anon), map, map, map, map, map, cdr, map, map, map, map, cdr, (anon), reduce, (anon), *, reduce, car, reduce, car, duplicate, duplicate, duplicate, duplicate, duplicate, duplicate, duplicate, cons, duplicate, duplicate, duplicate, duplicate, duplicate, duplicate, duplicate, cons, dup, dup, dup, dup, dup, dup, dup, cons, dup, dup, dup, dup, dup, cons, dup, cons]
+   (define (dup s) 
+..   (if (null? s) nil 
+..     (cons (car s) (cons (car s) (dup (cdr s))))))
+   (dup t)
+=> (9 9 8 8 7 7 6 6 5 5)
+
